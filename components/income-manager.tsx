@@ -160,7 +160,7 @@ export function IncomeManager() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-2xl font-bold text-green-600">
-                Rs.{totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                ${totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
               <p className="text-sm text-gray-500">Total Income</p>
             </div>
@@ -289,7 +289,7 @@ export function IncomeManager() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <span className="text-lg font-semibold text-green-600">
-                      +Rs.{transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                      +${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                     <Button
                       variant="ghost"

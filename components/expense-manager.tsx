@@ -164,7 +164,7 @@ export function ExpenseManager() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-2xl font-bold text-red-600">
-                Rs.{totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                ${totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
               <p className="text-sm text-gray-500">Total Expenses</p>
             </div>
@@ -293,7 +293,7 @@ export function ExpenseManager() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <span className="text-lg font-semibold text-red-600">
-                      -Rs.{transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                      -${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </span>
                     <Button
                       variant="ghost"

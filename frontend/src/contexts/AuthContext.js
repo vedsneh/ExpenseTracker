@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // ✅ Set axios header when token changes
+  // Set axios default header on mount + token change
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -26,18 +26,21 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // ✅ Check if user is logged in on app start
+  // Check user on first load or token change
   useEffect(() => {
     const checkAuth = async () => {
-      if (token) {
-        try {
-          const response = await axios.get('/api/auth/me');
-          setUser(response.data.user);
-        } catch (error) {
-          localStorage.removeItem('token');
-          setToken(null);
-          setUser(null);
-        }
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get('/api/auth/me');
+        setUser(response.data.user);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
       }
       setLoading(false);
     };
@@ -46,10 +49,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      const { token: newToken, user: userData } = response.data;
+      const { data } = await axios.post('/api/auth/login', { email, password });
+      const { token: newToken, user: userData } = data;
 
-      // ✅ Save token & attach immediately
       localStorage.setItem('token', newToken);
       setToken(newToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
@@ -66,8 +68,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('/api/auth/register', { name, email, password });
-      const { token: newToken, user: userData } = response.data;
+      const { data } = await axios.post('/api/auth/register', { name, email, password });
+      const { token: newToken, user: userData } = data;
 
       localStorage.setItem('token', newToken);
       setToken(newToken);
@@ -97,12 +99,8 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     loading,
-    isAuthenticated: !!token // ✅ now based on token, not just user
+    isAuthenticated: !!user // ✅ safer than just checking token
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

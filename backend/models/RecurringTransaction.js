@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const transactionSchema = new mongoose.Schema(
+const recurringTransactionSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,13 +27,24 @@ const transactionSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    date: {
+    frequency: {
+      type: String,
+      enum: ["daily", "weekly", "monthly", "yearly"],
+      default: "monthly",
+    },
+    startDate: {
       type: Date,
       required: true,
     },
-    attachment: {
-      type: String,
-      default: "",
+    endDate: {
+      type: Date,
+    },
+    lastProcessed: {
+      type: Date,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {
@@ -41,4 +52,4 @@ const transactionSchema = new mongoose.Schema(
   },
 )
 
-module.exports = mongoose.model("Transaction", transactionSchema)
+module.exports = mongoose.model("RecurringTransaction", recurringTransactionSchema)

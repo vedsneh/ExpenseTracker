@@ -101,7 +101,7 @@ export function RecentTransactions() {
                 </div>
                 <Badge variant={transaction.type === "income" ? "default" : "destructive"}>
                   {transaction.type === "income" ? "+" : "-"}
-                  Rs.{transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  ${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </Badge>
               </div>
             ))

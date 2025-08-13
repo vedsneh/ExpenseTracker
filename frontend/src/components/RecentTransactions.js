@@ -78,7 +78,7 @@ const RecentTransactions = () => {
                   fontWeight: '600',
                   color: isIncome ? '#16a34a' : '#dc2626'
                 }}>
-                  {isIncome ? '+' : '-'}Rs.{transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                  {isIncome ? '+' : '-'}${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </div>
               </div>
             );
