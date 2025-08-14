@@ -9,7 +9,7 @@
     "server": "cd backend && npm run dev",
     "client": "cd frontend && npm start",
     "build": "cd frontend && npm install && npm run build",
-  "start": "node server.js"
+  "start": "node server.js",
     "lint": "next lint",
     "install-deps": "cd backend && npm install && cd ../frontend && npm install"
   },
@@ -50,4 +50,5 @@
     "typescript": "^5"
   }
 }
+
 
