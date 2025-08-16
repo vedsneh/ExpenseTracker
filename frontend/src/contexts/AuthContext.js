@@ -17,7 +17,10 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // Set axios default header on mount + token change
+  //  Set axios baseURL globally (backend URL from env or fallback to localhost)
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://expensetracker-2-rdfl.onrender.com/";
+
+  //  Set axios default header on mount + token change
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -26,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // Check user on first load or token change
+  // ✅ Check user on first load or token change
   useEffect(() => {
     const checkAuth = async () => {
       if (!token) {
@@ -99,8 +102,13 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     loading,
-    isAuthenticated: !!user // ✅ safer than just checking token
+    isAuthenticated: !!user, // ✅ safer than just checking token
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
